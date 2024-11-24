@@ -21,7 +21,7 @@ module "lambda" {
   source                    = "./modules/lambda"
   turma                     = var.turma
   lambda_role_name          = var.lambda_role_name
-  lambda_role_lab           = "arn:aws:iam::${id_conta}:role/LabRole"
+  # lambda_role_lab           = "arn:aws:iam::${id_conta}:role/LabRole"
   lambda_iam_policy_name    = var.lambda_iam_policy_name
   pizzaria_bucket_id        = module.s3.pizzaria_bucket_id
   pizzaria_bucket_arn       = module.s3.pizzaria_bucket_arn
