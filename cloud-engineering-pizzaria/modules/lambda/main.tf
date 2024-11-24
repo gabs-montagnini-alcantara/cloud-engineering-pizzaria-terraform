@@ -2,8 +2,8 @@
 resource "aws_lambda_function" "lambda_trigger" {
   function_name    = "s3-to-sqs-function"
   filename         = "${path.module}/src.zip"
-  # role             = aws_iam_role.lambda_role.arn
-  role             = role_lab
+  role             = aws_iam_role.lambda_role.arn
+  # role             = role_lab
   
   handler          = "${path.module}src/lambda_trigger_function.lambda_handler"
   runtime          = "python3.9"          # Runtime da função
