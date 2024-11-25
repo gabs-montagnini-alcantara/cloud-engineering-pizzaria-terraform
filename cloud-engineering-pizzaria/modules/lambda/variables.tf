@@ -45,4 +45,8 @@ variable "url_sqs_pronto" {
   type        = string
 }
 
+variable "dynamodb_table_name" {
+  description = "nome da tabela do dynamodb"
+  type        = string
+}
 

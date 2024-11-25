@@ -30,4 +30,5 @@ resource "aws_s3_bucket_notification" "s3_notification" {
         events              = ["s3:ObjectCreated:*"]
         filter_prefix       = "pronto/"
     }
+    
 }

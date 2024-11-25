@@ -2,10 +2,11 @@
 resource "aws_lambda_function" "lambda_trigger" {
   function_name    = "s3-to-sqs-function"
   filename         = "${path.module}/src.zip"
-  role             = aws_iam_role.lambda_role.arn
-  # role             = role_lab
+  # role             = aws_iam_role.lambda_role.arn
+  role             = var.lambda_role_lab
   
-  handler          = "${path.module}src/lambda_trigger_function.lambda_handler"
+  # handler          = "${path.module}src/lambda_trigger_function.lambda_handler"
+  handler          = "src.lambda_trigger_function.lambda_handler"
   runtime          = "python3.9"          # Runtime da função
   source_code_hash = filebase64sha256("${path.module}/src.zip")
   
@@ -18,26 +19,18 @@ resource "aws_lambda_function" "lambda_trigger" {
   }
 }
 
-# resource "aws_lambda_function" "lambda_fila_preparacao" {
-#   function_name    = "lambda_fila_preparacao"
-#   filename         = "${path.module}/src.zip"
-#   role             = aws_iam_role.lambda_role.arn
+resource "aws_lambda_function" "lambda_insert_dynamo" {
+  function_name    = "lambda_insert_dynamo"
+  filename         = "${path.module}/src.zip"
+  role             = var.lambda_role_lab
   
-#   handler          = "${path.module}src/lambda_fila_preparacao.lambda_handler"
-#   runtime          = "python3.9"          # Runtime da função
-#   source_code_hash = filebase64sha256("${path.module}/src.zip")
-
-# }
-
-
-# resource "aws_lambda_function" "lambda_fila_pronto" {
-#   function_name    = "lambda_fila_pronto"
-#   filename         = "${path.module}/src.zip"
-#   role             = aws_iam_role.lambda_role.arn
+  handler          = "src.lambda_insert_dynamo.lambda_handler"
+  runtime          = "python3.9"
   
-#   handler          = "${path.module}src/lambda_fila_pronto.lambda_handler"
-#   runtime          = "python3.9"          # Runtime da função
-#   source_code_hash = filebase64sha256("${path.module}/src.zip")
-
-# }
-
+  source_code_hash = filebase64sha256("${path.module}/src.zip")
+  environment {
+    variables = {
+      DYNAMODB_TABLE = var.dynamodb_table_name
+    }
+  }
+}
